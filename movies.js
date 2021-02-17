@@ -18,18 +18,21 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // console to ensure you've got good data
     // ⬇️ ⬇️ ⬇️
 
-
-    let nowplaying = `https://api.themoviedb.org/3/movie/now_playing?api_key=31a4a63ed7b6207087f7a209e26fb6e7&language=en-US`
-        // console.log(nowplaying)
-    let response = await fetch(nowplaying)
-        // console.log(json)
-
-    let json = await response.json()
-            // console.log(json)
-        let movies = json.results 
     
-    let movieplaceholder = document.querySelector('movies')
-        console.log(movieplaceholder)
+    let nowplaying = `https://api.themoviedb.org/3/movie/now_playing?api_key=31a4a63ed7b6207087f7a209e26fb6e7&language=en-US`
+        console.log(nowplaying)
+    let response = await fetch(nowplaying)
+        console.log(nowplaying)
+    let json = await response.json()
+            console.log(json)
+    let movies = json.results 
+
+    let db = firebase.firestore()
+    let WatchedSnapshot = await db.collection('watched').get()
+        let WatchedMovies = WatchedSnapshot.docs
+
+    // let movieplaceholder = document.querySelector('movies')
+  
 
     // document.querySelector('.movies').addEventListener('submit', async function(event){
     //   event.preventDefault()
@@ -39,7 +42,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
 
     //     let response = await fetch(nowplaying)      
     // let postUsername = document.querySelector('#username').value
-  })
+ 
     // ⬆️ ⬆️ ⬆️ 
     // End Step 1
     
@@ -53,16 +56,40 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     
     // ⬇️ ⬇️ ⬇️
     for (let i=0; i<movies.length; i++){
-        let movieid = movie[i].movieid
+        
         let movie = movies[i]
+        let movieid = movie.id
+        let dbMovie = await db.collection('Watched').doc(`${movieid}`).get()
+        let dbMovieData = dbMovie.data()
+            console.log(dbMovieData)
+        let moviePosterPath = movie.poster_path
         let movieDOMElement = document.querySelector('.movies')
         // console.log(movie)
+        // colsole.log(movieDOMElement)
 
-        movieDOMElement.insertAdjacentHTML("beforeend",` <div class="w-1/5 p-4 movie-abcdefg1234567">
-        <img src="https://image.tmdb.org/t/p/w500/moviePosterPath.jpg" class="w-full">
+        movieDOMElement.insertAdjacentHTML("beforeend",
+        ` <div class="w-1/5 p-4 movie-${movieid}">
+        <img src="https://image.tmdb.org/t/p/w500/${moviePosterPath}" class="w-full">
         <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
       </div>
         `)
+
+    if (dbMovieData){
+        let movieView = document.querySelector(`.movie-${movieid}`)
+        movieView.classList.add('opacity-20')
+    }
+
+       
+    let watchedButton = document.querySelector(`.movie-${movieid}`)
+    watchedButton.addEventListener(`click`, async function(event){
+        event.preventDefault()
+        
+
+        let movieView = document.querySelector(`.movie-${movieid}`)
+        movieView.classList.add('opacity-20')
+        await db.collection('Watched').doc(`${movieid}`).set({ })
+    })
+    
     }
 
 
@@ -81,7 +108,13 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     //   the movie is watched. Use .classList.remove('opacity-20')
     //   to remove the class if the element already contains it.
     // ⬇️ ⬇️ ⬇️
-  
+        // let watchedButtons = document.querySelectorAll('.watched-button')
+        // watchedButtons.addEventListener(`click`, async function(event){
+        //     event.preventDefault()
+        //     document.querySelector(.movie-movieid)
+        // })
+
+
     // ⬆️ ⬆️ ⬆️ 
     // End Step 3
   
@@ -102,4 +135,9 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     //   database.
     // - Hint: you can use if (document) with no comparison
     //   operator to test for the existence of an object.
+
+
+    // open lab solution in annoucnemet on canvas .. grab 1st line 
+    // Lool at line 14 in lab 6 solution .. 
+
   })
