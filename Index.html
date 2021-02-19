@@ -1,0 +1,59 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-gray-800">
+  
+  <div class="movies p-16 md:flex md:flex-wrap">
+    <!-- JavaScript puts stuff here -->
+  </div>
+​
+  <!-- Put the Firebase config here -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+​
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+​
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDmHQkZbB1W1s2tE-SYz9asCLWDGktO0Ds",
+    authDomain: "kiei-451gre.firebaseapp.com",
+    projectId: "kiei-451gre",
+    storageBucket: "kiei-451gre.appspot.com",
+    messagingSenderId: "983272799134",
+    appId: "1:983272799134:web:67b38bd0b33bd538b5b48f",
+    measurementId: "G-T317RHN19F"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-gray-800">
+  
+  <div class="movies p-16 md:flex md:flex-wrap">
+
+    <!-- JavaScript puts stuff here -->
+  </div>
+
+  <!-- Put the Firebase config here -->
+
+  <script src="movies.js"></script>
+</body>
+</html> -->
